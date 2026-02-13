@@ -65,8 +65,8 @@ function App() {
         </div>
         <section className="card card--celebrate">
           <h1>Ура!!!! Я тебя люблю!!!</h1>
-          <img className="cat-image cat-image--hug" src="/images/cats-hug.svg" alt="Обнимающиеся котики" />
-          <p className="subtext">Ты только что сделал(а) этот день по-настоящему волшебным 💘</p>
+          <img className="cat-image cat-image--hug" src="/images/cats-hug.jpeg" alt="Обнимающиеся котики" />
+          <p className="subtext">Ты только что сделала этот день по-настоящему волшебным 💘</p>
         </section>
       </main>
     );
@@ -75,7 +75,7 @@ function App() {
   return (
     <main className="page">
       <section className="card">
-        <img className="cat-image cat-image--sad" src="/images/cat-sad.svg" alt="Жалобный котик" />
+        <img className="cat-image cat-image--sad" src="/images/cat-sad.jpeg" alt="Жалобный котик" />
         <h1>Будешь моей валентинкой?</h1>
         <p className="subtitle">Обещаю много обнимашек, заботы и вкусняшек 💝</p>
 

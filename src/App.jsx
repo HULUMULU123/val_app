@@ -1,35 +1,50 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-const confettiPieces = Array.from({ length: 55 }, (_, i) => ({
+const confettiPieces = Array.from({ length: 70 }, (_, i) => ({
   id: i,
   left: `${Math.random() * 100}%`,
-  delay: `${Math.random() * 1.2}s`,
-  duration: `${3 + Math.random() * 3}s`,
+  delay: `${Math.random() * 1.4}s`,
+  duration: `${2.8 + Math.random() * 3.4}s`,
   color: ['#ff2d6f', '#ff5b99', '#ffd166', '#f78fb3', '#ff85a2', '#ffd6e7'][i % 6]
 }));
+
+const YES_BASE_SIZE = 130;
+const NO_BASE_SIZE = 108;
 
 function App() {
   const [noClicks, setNoClicks] = useState(0);
   const [accepted, setAccepted] = useState(false);
+  const [viewport, setViewport] = useState({ width: 1280, height: 720 });
 
-  const dynamicScale = useMemo(() => {
-    const randomBoost = 1 + Math.sin(noClicks * 0.85) * 0.1 + ((noClicks % 3) * 0.06);
-    return Math.min(2.8, (1 + noClicks * 0.17) * randomBoost);
-  }, [noClicks]);
+  useEffect(() => {
+    const updateSize = () => setViewport({ width: window.innerWidth, height: window.innerHeight });
+    updateSize();
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
 
-  const noScale = useMemo(() => {
-    const unevenDrop = 1 - noClicks * 0.12 - Math.abs(Math.sin(noClicks * 0.9)) * 0.06;
-    return Math.max(0.35, unevenDrop);
+  const maxYesSize = Math.max(YES_BASE_SIZE, Math.min(viewport.width, viewport.height) * 0.92);
+
+  const yesSize = useMemo(() => {
+    const dynamicGrowth = noClicks * 34 + Math.abs(Math.sin(noClicks * 0.95)) * 45 + (noClicks % 4) * 16;
+    return Math.min(maxYesSize, YES_BASE_SIZE + dynamicGrowth);
+  }, [maxYesSize, noClicks]);
+
+  const noSize = useMemo(() => {
+    const unevenDrop = NO_BASE_SIZE - noClicks * 13 - Math.abs(Math.sin(noClicks * 0.82)) * 8;
+    return Math.max(5, unevenDrop);
   }, [noClicks]);
 
   const jitter = useMemo(() => {
-    const amplitude = Math.min(26, 5 + noClicks * 2.8);
+    const amplitude = Math.min(30, 5 + noClicks * 3.1);
     return {
-      '--jitter-x': `${Math.sin(noClicks * 1.3) * amplitude}px`,
-      '--jitter-y': `${Math.cos(noClicks * 0.85) * (amplitude * 0.6)}px`,
-      '--jitter-rot': `${Math.sin(noClicks * 0.75) * 4}deg`
+      '--jitter-x': `${Math.sin(noClicks * 1.18) * amplitude}px`,
+      '--jitter-y': `${Math.cos(noClicks * 0.91) * (amplitude * 0.62)}px`,
+      '--jitter-rot': `${Math.sin(noClicks * 0.71) * 6}deg`
     };
   }, [noClicks]);
+
+  const noTextVisible = noSize > 32;
 
   if (accepted) {
     return (
@@ -50,9 +65,7 @@ function App() {
         </div>
         <section className="card card--celebrate">
           <h1>Ура!!!! Я тебя люблю!!!</h1>
-          <p className="hugging-cats" aria-label="Обнимающиеся котики">
-            🐱💞🐱
-          </p>
+          <img className="cat-image cat-image--hug" src="/images/cats-hug.svg" alt="Обнимающиеся котики" />
           <p className="subtext">Ты только что сделал(а) этот день по-настоящему волшебным 💘</p>
         </section>
       </main>
@@ -62,16 +75,20 @@ function App() {
   return (
     <main className="page">
       <section className="card">
-        <p className="sad-cat" aria-label="Жалобный котик">
-          🥺🐈
-        </p>
+        <img className="cat-image cat-image--sad" src="/images/cat-sad.svg" alt="Жалобный котик" />
         <h1>Будешь моей валентинкой?</h1>
         <p className="subtitle">Обещаю много обнимашек, заботы и вкусняшек 💝</p>
 
         <div className="buttons">
           <button
             className={`btn btn-yes ${noClicks > 0 ? 'btn-yes--excited' : ''}`}
-            style={{ transform: `translate(var(--jitter-x), var(--jitter-y)) rotate(var(--jitter-rot)) scale(${dynamicScale})`, ...jitter }}
+            style={{
+              width: `${yesSize}px`,
+              height: `${yesSize}px`,
+              fontSize: `${Math.max(1, yesSize * 0.11)}px`,
+              transform: `translate(var(--jitter-x), var(--jitter-y)) rotate(var(--jitter-rot))`,
+              ...jitter
+            }}
             onClick={() => setAccepted(true)}
           >
             Да 💖
@@ -79,10 +96,15 @@ function App() {
 
           <button
             className="btn btn-no"
-            style={{ transform: `scale(${noScale})` }}
+            style={{
+              width: `${noSize}px`,
+              height: `${noSize}px`,
+              fontSize: `${Math.max(0, noSize * 0.22)}px`
+            }}
             onClick={() => setNoClicks((value) => value + 1)}
+            aria-label="Нет"
           >
-            Нет
+            {noTextVisible ? 'Нет' : ''}
           </button>
         </div>
       </section>

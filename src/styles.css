@@ -21,7 +21,7 @@ body {
 }
 
 .card {
-  width: min(92vw, 620px);
+  width: min(92vw, 680px);
   background: linear-gradient(165deg, #fff4f8, #ffe3ef);
   border: 3px solid #ff6fa0;
   border-radius: 24px;
@@ -30,14 +30,23 @@ body {
   padding: 2rem 1.75rem;
 }
 
-.sad-cat {
-  margin: 0;
-  font-size: clamp(2.7rem, 9vw, 4.6rem);
+.cat-image {
+  display: block;
+  margin: 0 auto;
+  width: min(100%, 340px);
+  height: auto;
+}
+
+.cat-image--sad {
   animation: plead 1.8s ease-in-out infinite;
 }
 
+.cat-image--hug {
+  width: min(100%, 410px);
+}
+
 h1 {
-  margin-top: 0.4rem;
+  margin-top: 0.8rem;
   margin-bottom: 0.75rem;
   color: #b2184e;
   font-size: clamp(1.7rem, 5vw, 2.5rem);
@@ -50,7 +59,7 @@ h1 {
 }
 
 .buttons {
-  margin-top: 1.6rem;
+  margin-top: 1.8rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,19 +69,18 @@ h1 {
 
 .btn {
   border: none;
-  padding: 0.9rem 1.4rem;
   border-radius: 999px;
-  font-size: 1.05rem;
   font-weight: 700;
   cursor: pointer;
-  transition: transform 0.25s cubic-bezier(0.19, 1, 0.22, 1), filter 0.2s ease;
+  transition: width 0.28s cubic-bezier(0.19, 1, 0.22, 1), height 0.28s cubic-bezier(0.19, 1, 0.22, 1), transform 0.2s ease;
+  display: grid;
+  place-items: center;
 }
 
 .btn-yes {
   color: white;
   background: linear-gradient(145deg, #ff1464, #ff4f93, #ff1f78);
   box-shadow: 0 0 0 0 rgba(255, 32, 120, 0.45);
-  min-width: 120px;
 }
 
 .btn-yes--excited {
@@ -82,12 +90,8 @@ h1 {
 .btn-no {
   background: linear-gradient(180deg, #d3d3d3, #a8a8a8);
   color: #575757;
-  filter: saturate(0.3);
-  min-width: 95px;
-}
-
-.btn:hover {
-  filter: brightness(1.08);
+  filter: saturate(0.28);
+  overflow: hidden;
 }
 
 .page--celebration {
@@ -98,11 +102,6 @@ h1 {
 .card--celebrate {
   position: relative;
   z-index: 1;
-}
-
-.hugging-cats {
-  font-size: clamp(3rem, 9vw, 5rem);
-  margin: 0.6rem 0;
 }
 
 .confetti {
@@ -128,9 +127,11 @@ h1 {
     transform: translateY(-20px) rotate(0deg);
     opacity: 0;
   }
+
   8% {
     opacity: 1;
   }
+
   100% {
     transform: translateY(110vh) rotate(540deg);
     opacity: 0.2;
@@ -138,20 +139,24 @@ h1 {
 }
 
 @keyframes pulseGlow {
+
   0%,
   100% {
     box-shadow: 0 0 0 0 rgba(255, 32, 120, 0.5);
   }
+
   50% {
     box-shadow: 0 0 0 16px rgba(255, 32, 120, 0);
   }
 }
 
 @keyframes plead {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-8px) scale(1.04);
   }

@@ -1,0 +1,163 @@
+:root {
+  font-family: 'Trebuchet MS', 'Comic Sans MS', 'Segoe UI', sans-serif;
+  color: #651333;
+  background: radial-gradient(circle at top, #ffd7e5, #ffc4d9 40%, #ffb3cc 70%, #ff9fbe 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+.card {
+  width: min(92vw, 680px);
+  background: linear-gradient(165deg, #fff4f8, #ffe3ef);
+  border: 3px solid #ff6fa0;
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(170, 34, 92, 0.28);
+  text-align: center;
+  padding: 2rem 1.75rem;
+}
+
+.cat-image {
+  display: block;
+  margin: 0 auto;
+  width: min(100%, 340px);
+  height: auto;
+}
+
+.cat-image--sad {
+  animation: plead 1.8s ease-in-out infinite;
+}
+
+.cat-image--hug {
+  width: min(100%, 410px);
+}
+
+h1 {
+  margin-top: 0.8rem;
+  margin-bottom: 0.75rem;
+  color: #b2184e;
+  font-size: clamp(1.7rem, 5vw, 2.5rem);
+}
+
+.subtitle,
+.subtext {
+  margin-top: 0;
+  color: #8e3358;
+}
+
+.buttons {
+  margin-top: 1.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: width 0.28s cubic-bezier(0.19, 1, 0.22, 1), height 0.28s cubic-bezier(0.19, 1, 0.22, 1), transform 0.2s ease;
+  display: grid;
+  place-items: center;
+}
+
+.btn-yes {
+  color: white;
+  background: linear-gradient(145deg, #ff1464, #ff4f93, #ff1f78);
+  box-shadow: 0 0 0 0 rgba(255, 32, 120, 0.45);
+}
+
+.btn-yes--excited {
+  animation: pulseGlow 0.9s ease-in-out infinite;
+}
+
+.btn-no {
+  background: linear-gradient(180deg, #d3d3d3, #a8a8a8);
+  color: #575757;
+  filter: saturate(0.28);
+  overflow: hidden;
+}
+
+.page--celebration {
+  position: relative;
+  overflow: hidden;
+}
+
+.card--celebrate {
+  position: relative;
+  z-index: 1;
+}
+
+.confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -12px;
+  width: 10px;
+  height: 22px;
+  border-radius: 3px;
+  opacity: 0.86;
+  animation-name: confettiFall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-20px) rotate(0deg);
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(110vh) rotate(540deg);
+    opacity: 0.2;
+  }
+}
+
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 32, 120, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 0 0 16px rgba(255, 32, 120, 0);
+  }
+}
+
+@keyframes plead {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px) scale(1.04);
+  }
+}
